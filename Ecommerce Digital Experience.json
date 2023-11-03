@@ -1,0 +1,590 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      7
+    ],
+    "clusterVersion": "1.268.70.20230531-151855"
+  },
+  "id": "8ec0e0b1-cc35-4b5a-8bc4-650a153e32e1",
+  "dashboardMetadata": {
+    "name": "Ecommerce Digital Experience",
+    "shared": false,
+    "owner": "anarita.valente@dynatrace.com",
+    "popularity": 2,
+    "hasConsistentColors": false
+  },
+  "tiles": [
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Number of Visitors",
+      "query": "SELECT COUNT(*) as \"number_visitors\" FROM usersession WHERE useraction.application='my_application' ",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "KPI’s for Specific Sections/Menus of the Website ",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 494,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "KPI’s for Website in General",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 38,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "Orders/Sales",
+      "tileType": "HEADER",
+      "configured": true,
+      "bounds": {
+        "top": 988,
+        "left": 0,
+        "width": 608,
+        "height": 38
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Abandoned Baskets",
+      "query": "SELECT count(*), CONDITION(count(*), where useraction.isExitAction=true) AS \"Abandoned cart\", CONDITION(count(*), where useraction.isExitAction=false) AS \"Not abandoned\" from usersession where useraction.application=\"my_application\" and useraction.name=\"user_action_name\"",
+      "type": "COLUMN_CHART",
+      "visualizationConfig": {
+        "hasAxisBucketing": false
+      },
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Number of Unique Visitors",
+      "query": "SELECT COUNT(DISTINCT userID) AS \"number_unique_visitors\" FROM usersession WHERE useraction.application=\"my_application\"",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "Average Session Duration",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 912,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "metricSelector": "builtin:apps.web.sessionDuration:filter(and(or(in(\"dt.entity.application\",entitySelector(\"type(application),entityName(~\"myapplication~\")\"))),or(eq(\"User type\",\"Real users\")))):splitBy():sort(value(auto,descending)):limit(20)",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false,
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:apps.web.sessionDuration:filter(and(or(in(\"dt.entity.application\",entitySelector(\"type(application),entityName(~\"myapplication~\")\"))),or(eq(\"User type\",\"Real users\")))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 532,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Number of Visitors",
+      "query": "SELECT COUNT(*) AS \"number visitors\" FROM usersession WHERE (useraction.application=\"my_application\" AND useraction.name=\"user_action_name\")",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 532,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Number of Unique Visitors",
+      "query": "SELECT COUNT(DISTINCT userID) AS \"number visitors\" FROM usersession WHERE (useraction.application=\"my_application\" AND useraction.name=\"user_action_name\")",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 532,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Number of Clicks",
+      "query": "SELECT COUNT(*) AS \"count_useractions\" FROM useraction WHERE (application=\"my_application\" AND name=\"user_action_name\")",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "Number of Clicks Overtime",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 532,
+        "left": 912,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.application_method"
+          ],
+          "metricSelector": "builtin:apps.web.action.count.load.browser:filter(and(or(in(\"dt.entity.application_method\",entitySelector(\"type(application_method),entityName.equals(~\"user_action_name~\")\"))))):splitBy(\"dt.entity.application_method\"):sort(value(auto,descending)):limit(20)\n",
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false,
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:apps.web.action.count.load.browser:filter(and(or(in(\"dt.entity.application_method\",entitySelector(\"type(application_method),entityName.equals(~\"user_action_name~\")\"))))):splitBy(\"dt.entity.application_method\"):sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 0,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Top Visited Products",
+      "query": "SELECT name AS \"Product\", COUNT(*) AS'#' FROM useraction WHERE application=\"my_application\" AND useraction.name like \"*user_action_name*\" AND usersession.usertype=\"REAL_USER\" AND type=\"Load\" GROUP BY name",
+      "type": "COLUMN_CHART",
+      "visualizationConfig": {
+        "hasAxisBucketing": false
+      },
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 304,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Top Ordered Products ",
+      "query": "SELECT stringProperties.product_property as \"Product\" , COUNT(*) AS \"Number of Orders\" FROM useraction WHERE application=\"my_application\" AND usersession.usertype=\"REAL_USER\" GROUP BY stringProperties.product_property ORDER BY COUNT(*) DESC",
+      "type": "TABLE",
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 912,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Total Sales Generated",
+      "query": "SELECT SUM(doubleProperties.sales_property) as \"Sales\" FROM usersession WHERE useraction.application=\"my_application\" AND usersession.usertype=\"REAL_USER\"",
+      "type": "SINGLE_VALUE",
+      "limit": 50
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 608,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {
+        "timeframe": "Last 2 hours"
+      },
+      "isAutoRefreshDisabled": false,
+      "customName": "Top 10 Visitors ",
+      "query": "SELECT TOP(userID, 10), COUNT(userID) AS \"Number of Visits\" FROM usersession WHERE useraction.application=\"my_application\" GROUP BY userID ORDER BY COUNT(userID) ",
+      "type": "COLUMN_CHART",
+      "visualizationConfig": {
+        "hasAxisBucketing": false
+      },
+      "limit": 50
+    },
+    {
+      "name": "Number of Sessions Overtime",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 1216,
+        "width": 456,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Data explorer results",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "builtin:apps.web.activeSessions",
+          "spaceAggregation": "AUTO",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "sortByDimension": "",
+          "filterBy": {
+            "filterOperator": "AND",
+            "nestedFilters": [
+              {
+                "filter": "dt.entity.application",
+                "filterType": "NAME",
+                "filterOperator": "OR",
+                "entityAttribute": "entityName",
+                "nestedFilters": [],
+                "criteria": [
+                  {
+                    "value": "my_application",
+                    "evaluator": "IN",
+                    "matchExactly": false
+                  }
+                ]
+              }
+            ],
+            "criteria": []
+          },
+          "limit": 20,
+          "rate": "NONE",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "GRAPH_CHART",
+        "global": {},
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE",
+          "showLabels": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "hiddenColumns": []
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(builtin:apps.web.activeSessions:filter(and(or(in(\"dt.entity.application\",entitySelector(\"type(application),entityName(~\"my_application~\")\"))))):splitBy():sort(value(auto,descending)):limit(20)):limit(100):names"
+      ]
+    },
+    {
+      "name": "User Sessions Query",
+      "tileType": "DTAQL",
+      "configured": true,
+      "bounds": {
+        "top": 1026,
+        "left": 1216,
+        "width": 304,
+        "height": 304
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "customName": "Top 10 Buyers ",
+      "query": "SELECT TOP(userID, 10), SUM(doubleProperties.sales_property) AS \"Sales\" FROM usersession WHERE useraction.application=\"my_application\" AND usersession.usertype=\"REAL_USER\" GROUP BY userID ORDER BY SUM(doubleProperties.sales_property) DESC",
+      "type": "COLUMN_CHART",
+      "visualizationConfig": {
+        "hasAxisBucketing": false
+      },
+      "limit": 50
+    },
+    {
+      "name": "Image",
+      "tileType": "IMAGE",
+      "configured": true,
+      "bounds": {
+        "top": 76,
+        "left": 1710,
+        "width": 190,
+        "height": 190
+      },
+      "tileFilter": {},
+      "isAutoRefreshDisabled": false,
+      "image": "data:image/webp;base64,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"
+    }
+  ]
+}
